@@ -13,26 +13,50 @@ function onDeviceReady() {
 
 }
 
-var minute = 0;
-var sekunde = 0;
+var countdown_int;
+var seconds_total = 5;
+
+var minutes = Math.floor(seconds_total / 60);
+var seconds= seconds_total % 60;
+
 
 
 
 document.body.onload = function load()
 {
-    mainDisplay = new display("main");   //main display
-    document.getElementById("box").appendChild(mainDisplay.el);
+    displayContainer = new container("displayContainer");   //time display container
+    document.getElementById("box").appendChild(displayContainer.el);
 
-    digitsContainer = new display("digitsContainer");   //timer digits display
-    document.getElementById("main").appendChild(digitsContainer.el);
+    digitsContainer = new container("digitsContainer");   //timer digits container
+    document.getElementById("displayContainer").appendChild(digitsContainer.el);
+ 
+    buttonContainer = new container("buttonContainer");   //button container
+    document.getElementById("box").appendChild(buttonContainer.el);
+
+    inputContainer = new container("inputContainer");   //button container
+    document.getElementById("box").appendChild(inputContainer.el);
     
-    startBtn = new fbutton("btn");
-    document.getElementById("main").appendChild(startBtn.el);
+    startBtn = new fbutton("start_btn");
+    document.getElementById("buttonContainer").appendChild(startBtn.el);
+
+    startBtn = new fbutton("stop_btn");
+    document.getElementById("buttonContainer").appendChild(startBtn.el);
+    
+}
+
+class input_field
+{   
+    constructor(arg_id)
+    {
+        this.el = document.createElement("INPUT");
+        this.el.classList.add("input_field");
+        this.el.id = arg_id;   
+    }
     
 }
 
 
-class display
+class container
 {   
     constructor(arg_id)
     {
@@ -48,25 +72,59 @@ class fbutton
     constructor(arg_id)
     {
         this.el = document.createElement("BUTTON");
-        this.el.innerHTML = "botun";
+       
         this.el.classList.add("fbutton");
         this.el.id = arg_id;     
+         digitsContainer.el.innerHTML = minutes + ":" + seconds;
+
+    if(arg_id == "start_btn"){  //START BUTTON
+
+         this.el.innerHTML = "START";
+        
+        $(this.el).click(function(){
+         countdown_int = setInterval(countDown, 1000);
+
+        });
+    }
+
+    if(arg_id == "stop_btn"){   //STOP BUTTON
+
+        this.el.innerHTML = "STOP";
 
         $(this.el).click(function(){
-            abc();
-            digitsContainer.el.innerHTML = minute + ":" + sekunde;   
-            
-            
+             clearInterval(countdown_int);
         });
-
-    function abc()
-    {
-        minute++;
     }
+    
         
     }   
 }
 
+
+function countDown()
+    {
+    
+       if( seconds_total == 0)  //if the countdown is over
+        {
+            clearInterval(countdown_int);
+            return;
+        }
+        
+       if( seconds != 0){
+            seconds--;
+            seconds_total--;
+        }
+    
+        else if(seconds == 0)
+        {
+            seconds = 59;
+            seconds_total--;
+        }
+
+        minutes = Math.floor(seconds_total / 60);
+    
+        digitsContainer.el.innerHTML = minutes + ":" + seconds;   
+    }
 
 
 
