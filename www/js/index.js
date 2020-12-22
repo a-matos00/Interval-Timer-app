@@ -13,6 +13,10 @@ function onDeviceReady() {
 
 }
 
+var minute = 0;
+var sekunde = 0;
+
+
 
 document.body.onload = function load()
 {
@@ -21,12 +25,10 @@ document.body.onload = function load()
 
     digitsContainer = new display("digitsContainer");   //timer digits display
     document.getElementById("main").appendChild(digitsContainer.el);
-
-    digitsContainer.el.innerHTML = "01" + ":" + "55";
-
-   /* startBtn = new fbutton("btn");
-    document.getElementById("box").appendChild(startBtn.el);
-    */
+    
+    startBtn = new fbutton("btn");
+    document.getElementById("main").appendChild(startBtn.el);
+    
 }
 
 
@@ -48,9 +50,25 @@ class fbutton
         this.el = document.createElement("BUTTON");
         this.el.innerHTML = "botun";
         this.el.classList.add("fbutton");
-        this.el.id = arg_id;      
+        this.el.id = arg_id;     
+
+        $(this.el).click(function(){
+            abc();
+            digitsContainer.el.innerHTML = minute + ":" + sekunde;   
+            
+            
+        });
+
+    function abc()
+    {
+        minute++;
+    }
+        
     }   
 }
+
+
+
 
 
 
