@@ -27,6 +27,12 @@ body {
     height:100%;
 }
 
+.input_field
+{
+    width: 50%;
+    height:50%;
+}
+
 #box{
     width:100%;
     height:100%;
