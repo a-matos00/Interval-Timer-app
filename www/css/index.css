@@ -94,5 +94,12 @@ body {
     background-color:grey;
 }
 
+#SetInputContainer
+{
+    width:100%;
+    height:30%;
+    background-color:blue;
+}
+
 
 
