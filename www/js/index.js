@@ -13,8 +13,8 @@ function onDeviceReady() {
 
 }
 
-var countdown_int;  //setInterval variable
-var countdown_int_rest;  //setInterval variable
+var countDownWork_int;  //setInterval variable
+var countDownWork_int_rest;  //setInterval variable
 
 var seconds_total_work = 0;
 var seconds_total_rest = 0;
@@ -163,9 +163,11 @@ class fbutton
              this.el.innerHTML = "START";
         
             $(this.el).click(function(){
+                document.getElementById("start_btn").style.visibility = "hidden";
+                document.getElementById("stop_btn").style.visibility = "visible";
                 seconds_total_work = parseInt(input_seconds_work) + parseInt(input_minutes_work * 60);
-                alert(seconds_total_work);
-                countdown_int = setInterval(countDown, 1000);
+               
+                countDownWork_int = setInterval(countDownWork, 1000);
 
             });
         }
@@ -175,8 +177,9 @@ class fbutton
             this.el.innerHTML = "STOP";
 
             $(this.el).click(function(){
-                 
-                 clearInterval(countdown_int);
+                 document.getElementById("stop_btn").style.visibility = "hidden";
+                 document.getElementById("start_btn").style.visibility = "visible";
+                 clearInterval(countDownWork_int);
             });
          }
        
@@ -184,12 +187,13 @@ class fbutton
 }
 
 
-function countDown()
+function countDownWork()
     {
     
-       if( seconds_total_work == 0)  //if the countdown is over
+       if( seconds_total_work == 0)  //if the countDownWork is over
         {
-            clearInterval(countdown_int);
+            clearInterval(countDownWork_int);
+            document.getElementById("start_btn").style.visibility = "visible";
             return;
         }
         
