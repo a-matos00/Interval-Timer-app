@@ -14,34 +14,29 @@ function onDeviceReady() {
 }
 
 
-
 document.body.onload = function load()
 {
-    x = new display_screen;
-    document.getElementById("box").appendChild(x.display);
-    y = new fbutton("btn");
-    document.getElementById("box").appendChild(y.el);
-    
+    mainDisplay = new display("main");   //main display
+    document.getElementById("box").appendChild(mainDisplay.el);
 
-    if( localStorage.getItem("broj") != null || NaN || undefined)
-    {      
-        $("#box").append(localStorage.getItem("broj"));
-    }
-    else{
-        document.getElementById("box").innerHTML += "nema";
-    }
-    
-    
+    digitsContainer = new display("digitsContainer");   //timer digits display
+    document.getElementById("main").appendChild(digitsContainer.el);
+
+    digitsContainer.el.innerHTML = "01" + ":" + "55";
+
+   /* startBtn = new fbutton("btn");
+    document.getElementById("box").appendChild(startBtn.el);
+    */
 }
 
 
-class display_screen
+class display
 {   
-    constructor()
+    constructor(arg_id)
     {
-        this.display = document.createElement("DIV");
-        this.display.classList.add("display");
-        
+        this.el = document.createElement("DIV");
+        this.el.classList.add("display");
+        this.el.id = arg_id;   
     }
     
 }
@@ -53,14 +48,8 @@ class fbutton
         this.el = document.createElement("BUTTON");
         this.el.innerHTML = "botun";
         this.el.classList.add("fbutton");
-        this.el.id = arg_id;
-
-        $(this.el).click(function(){
-            localStorage.setItem("broj", "2");
-            $("#btn").html(localStorage.getItem("broj"));
-        });
-            
-     }   
+        this.el.id = arg_id;      
+    }   
 }
 
 
