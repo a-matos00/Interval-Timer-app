@@ -20,40 +20,27 @@ body {
     position:relative;
 }
 
-
-.fbutton
+input
 {
-    width:50%;
-    height:100%;
-}
-
-.input_field
-{
-    width: 20%;
-    height:20%;
-}
-
-#box{
-    width:100%;
-    height:100%;
-    
-}
-
-#start_btn{
-    background-color:red;
-}
-
-#digitsContainer
-{
-    position:absolute;
-    top:30%;
-    left:20%;
-    width:60%;
-    height:40%;
-    background-color:green;
-    font-size:9vh;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    background:none;
+    border:none;
+    border-bottom:solid;
+    font-size:5vh;
     text-align:center;
-   
+    border-width:1px;
+    margin-left:10px;
+    margin-right:10px;
+    padding-bottom:1.5vh;
+    color:white;
+}
+
+button
+{
+    color:white;
+    background-color:transparent;
+    border:solid;
 }
 
 #buttonContainer
@@ -61,15 +48,62 @@ body {
     top:40vh;
     width:100%;
     height:20%;
-    background-color:purple;
 }
+
+.fbutton
+{
+    width:50%;
+    height:100%;
+    font-size:5vh;
+     
+}
+
+.input_field
+{
+    
+    width: 6vh;
+    height:4vh;
+}
+
+#stop_btn
+{
+   visibility:hidden;
+}
+
+#box{
+    width:100%;
+    height:100%;
+    background-color:#005cfc;
+    color:white;
+    font-family:abc;
+    
+}
+
+@font-face {
+  font-family: abc;
+  src: url(abc.ttf);
+}
+
+
+#digitsContainer
+{
+    width:100%;
+    position:absolute;
+    top:14vh;
+    height:10vh;
+    font-size:14vh;
+    text-align:center;
+   
+}
+
+
 
 #displayContainer
 {
     position:relative;
     width: 100%;
     height: 40%;
-    background-color:cyan;
+    
 }
 
 #inputContainer
@@ -77,28 +111,57 @@ body {
     position:relative;
     width: 100%;
     height: 40%;
-    background-color:yellow;
+
 }
 
 #WorkInputContainer
 {
     width:100%;
     height:30%;
-    background-color:orange;
+
 }
 
 #RestInputContainer
 {
     width:100%;
     height:30%;
-    background-color:grey;
+
 }
 
 #SetInputContainer
 {
     width:100%;
     height:30%;
-    background-color:blue;
+
+}
+
+#MessageContainer
+{
+    position:absolute;
+    bottom:0%;
+    width:100%;
+    height:10vh;
+    font-size:8vh;
+    text-align:center;
+   
+}
+
+#SetContainer
+{
+    position:absolute;
+    top:2vh;
+    font-size: 6vh;
+    width:100%;
+    height:8vh;
+    text-align:center;
+}
+
+.flexeri{
+    display:flex;
+    font-size:4vh;
+    padding:none;
+    padding-left:50px;
+    box-sizing: border-box;
 }
 
 
