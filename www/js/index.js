@@ -9,79 +9,80 @@ function onDeviceReady() {
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
     document.getElementById('deviceready').classList.add('ready');
-    screen.orientation.lock('portrait');
+
+    screen.orientation.lock('portrait');//orientation lock(cordova plugin)
 
 }
 
-var countDownWork_int;  //setInterval variable
+var interval_variable;  //variable used for intervals
 
-
-var seconds_total_work = 0;
+var seconds_total_work = 0; //countdown variables
 var seconds_total_rest = 0;
 
 var minutes = 0;
 var seconds = 0;
 
+//user input variables
 var input_seconds_work = 0;
 var input_minutes_work = 0;
 
 var input_seconds_rest = 0;
 var input_minutes_rest = 0;
 
-var sets = 1;
+var sets = 1;   //number of repetitions
 
-
-var state = "";
+var state = "";         //logical variables
 var pre_pause_state = "";
 
-
-var beep = new Audio('beep.mp3');
+var beep = new Audio('beep.mp3');   //audio files
 var beepbeep = new Audio('beepbeep.mp3');
 
 
+//function loads all DOM elements, restores local storage data and defines input functions
 document.body.onload = function load()
 {
-    screen.orientation.lock('portrait');
-    displayContainer = new container("displayContainer");   //time display container
+    screen.orientation.lock('portrait');    //orientation lock(cordova plugin)
+
+    displayContainer = new container("displayContainer");   //data and messages display container
     document.getElementById("box").appendChild(displayContainer.el);
 
-    SetContainer = new container("SetContainer");   //timer digits container
+    SetContainer = new container("SetContainer");   //set count display
     document.getElementById("displayContainer").appendChild(SetContainer.el);
     SetContainer.el.innerHTML = "SETS LEFT: " + sets;
     
-    digitsContainer = new container("digitsContainer");   //timer digits container
+    digitsContainer = new container("digitsContainer");   //timer display
     document.getElementById("displayContainer").appendChild(digitsContainer.el);
 
-    MessageContainer = new container("MessageContainer");   //timer digits container
+    MessageContainer = new container("MessageContainer");   //message display
     document.getElementById("displayContainer").appendChild(MessageContainer.el);
     MessageContainer.el.innerHTML = state;
    
-    inputContainer = new container("inputContainer");   //button container
+    inputContainer = new container("inputContainer");   //main input wrapper
     document.getElementById("box").appendChild(inputContainer.el);
 
-    WorkInputContainer = new container("WorkInputContainer");   //button container
+    WorkInputContainer = new container("WorkInputContainer");   //work input wrapper
     document.getElementById("inputContainer").appendChild(WorkInputContainer.el);
     WorkInputContainer.el.classList.add("flexeri");
 
-    WorkDesc= new container("WorkDesc");   //button container
+    WorkDesc= new container("WorkDesc");
     document.getElementById("WorkInputContainer").appendChild(WorkDesc.el);
     WorkDesc.el.innerHTML = "WORK";
 
     WorkMinutesInput = new input_field("WorkMinutesInput");
     document.getElementById("WorkInputContainer").appendChild(WorkMinutesInput.el);
 
-    WorkColon = new container("WorkColon");   //timer digits container
+    WorkColon = new container("WorkColon");
     document.getElementById("WorkInputContainer").appendChild(WorkColon.el);
     WorkColon.el.innerHTML = ":";
     
     WorkSecondsInput = new input_field("WorkSecondsInput");
     document.getElementById("WorkInputContainer").appendChild(WorkSecondsInput.el);
 
-    RestInputContainer = new container("RestInputContainer");   //button container
+    RestInputContainer = new container("RestInputContainer");    //rest input wrapper
     document.getElementById("inputContainer").appendChild(RestInputContainer.el);
     RestInputContainer.el.classList.add("flexeri");
 
-    RestDesc= new container("RestDesc");   //intput specifier
+    RestDesc= new container("RestDesc");
     document.getElementById("RestInputContainer").appendChild(RestDesc.el);
     RestDesc.el.innerHTML = "REST       ";
 
@@ -95,7 +96,7 @@ document.body.onload = function load()
     RestSecondsInput = new input_field("RestSecondsInput");
     document.getElementById("RestInputContainer").appendChild(RestSecondsInput.el);
 
-    SetInputContainer = new container("SetInputContainer");   //button container
+    SetInputContainer = new container("SetInputContainer");   //set input wrapper
     document.getElementById("inputContainer").appendChild(SetInputContainer.el);
     SetInputContainer.el.classList.add("flexeri");
 
@@ -106,7 +107,7 @@ document.body.onload = function load()
     SetInput = new input_field("SetInput");
     document.getElementById("SetInputContainer").appendChild(SetInput.el);
 
-    buttonContainer = new container("buttonContainer");   //button container
+    buttonContainer = new container("buttonContainer");   //button wrapper
     document.getElementById("box").appendChild(buttonContainer.el);
         
     startBtn = new fbutton("start_btn");    //start button
@@ -118,6 +119,7 @@ document.body.onload = function load()
     resetBtn = new fbutton("reset_btn");    //start button
     document.getElementById("buttonContainer").appendChild(resetBtn.el);
 
+    //local storage acess(contains input values and number of sets from last input change)
     if(localStorage.getItem("saved_seconds_work") != null || NaN || undefined )
     {
         input_seconds_work = localStorage.getItem("saved_seconds_work")
@@ -143,6 +145,7 @@ document.body.onload = function load()
         sets = localStorage.getItem("saved_sets")
     }
     
+    //applies local storage access result to GUI
     document.getElementById("WorkSecondsInput").value = input_seconds_work;
     document.getElementById("WorkMinutesInput").value = input_minutes_work;
     document.getElementById("RestSecondsInput").value = input_seconds_rest;
@@ -151,12 +154,15 @@ document.body.onload = function load()
     SetContainer.el.innerHTML = "SETS LEFT: " + sets;
     digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;
     
-     $('#WorkSecondsInput').on('input', function() { 
+
+    //function is called when the user types something in the input field
+    $('#WorkSecondsInput').on('input', function() { 
              
-             if( $(this).val() < 60 &&  $(this).val() > -1 &&  ($(this).val()).length < 3){ //les than 3 digits
-                input_seconds_work = $(this).val();
-                digitsContainer.el.innerHTML = minutes + ":" + input_seconds_work;
-                seconds = input_seconds_work;
+             if( $(this).val() < 60 &&  $(this).val() > -1 &&  ($(this).val()).length < 3){
+                input_seconds_work = $(this).val(); //save user input
+              //  seconds = input_seconds_work;
+                digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;  //HTML change
+                
              }
         
             else{   //invalid input
@@ -306,7 +312,7 @@ class fbutton
                 
                 digitsContainer.el.innerHTML = minutes + ":" + seconds;
                 
-                countDownWork_int = setInterval(countDownWork, 1000);
+                interval_variable = setInterval(countDownWork, 1000);
 
             });
             
@@ -321,7 +327,7 @@ class fbutton
                if( state == "WORK" || state == "REST" )
                { 
                     stopBtn.el.innerHTML = "continue";
-                    clearInterval(countDownWork_int);
+                    clearInterval(interval_variable);
                     pre_pause_state = state;
                     state = "PAUSE";
                     MessageContainer.el.innerHTML = state;
@@ -333,11 +339,11 @@ class fbutton
                     state = pre_pause_state;
                     stopBtn.el.innerHTML = "PAUSE";
                     if( state == "WORK" ){
-                       countDownWork_int = setInterval(countDownWork, 1000);
+                       interval_variable = setInterval(countDownWork, 1000);
                     }
 
                     if( state == "REST" ){
-                        countDownWork_int = setInterval(countDownRest, 1000);
+                        interval_variable = setInterval(countDownRest, 1000);
                     }
                }
 
@@ -350,6 +356,7 @@ class fbutton
             this.el.innerHTML = "RESET";
             
             $(this.el).click(function(){
+                MessageContainer.el.innerHTML = "";
                document.getElementById("reset_btn").style.visibility = "hidden";
                 document.getElementById("box").style.backgroundColor = "#005cfc";
                 inputContainer.el.style.visibility = "visible";
@@ -361,7 +368,7 @@ class fbutton
                 
                 digitsContainer.el.innerHTML = minutes + ":" + seconds;
                 
-                clearInterval(countDownWork_int);
+                clearInterval(interval_variable);
                 SetContainer.el.innerHTML = "SETS LEFT: " + sets;  
             });
         }
@@ -378,7 +385,7 @@ function countDownWork()
     
        if( seconds_total_work == 0)  //kraj serije
         {
-            clearInterval(countDownWork_int);
+            clearInterval(interval_variable);
             sets--;
             SetContainer.el.innerHTML = "SETS LEFT: " + sets;
 
@@ -409,7 +416,7 @@ function countDownWork()
                 document.getElementById("box").style.backgroundColor = " #fc2a00 ";
                 state = "REST";
                 MessageContainer.el.innerHTML = state;
-               countDownWork_int = setInterval(countDownRest, 1000);
+               interval_variable = setInterval(countDownRest, 1000);
             return;
         }
 
@@ -438,7 +445,7 @@ function countDownRest()
        if( seconds_total_rest == 0)  //kraj serije
         {
             beep.play();
-            clearInterval(countDownWork_int);
+            clearInterval(interval_variable);
 
             seconds_total_rest = parseInt(input_seconds_rest) + parseInt(input_minutes_rest * 60);
             minutes = Math.floor(seconds_total_work / 60);
@@ -446,7 +453,7 @@ function countDownRest()
             document.getElementById("box").style.backgroundColor = "#00cf26";
             state = "WORK";
                 MessageContainer.el.innerHTML = state;
-            countDownWork_int = setInterval(countDownWork, 1000);
+            interval_variable = setInterval(countDownWork, 1000);
 
         }
         
