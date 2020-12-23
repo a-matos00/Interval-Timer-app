@@ -9,7 +9,7 @@ function onDeviceReady() {
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
     document.getElementById('deviceready').classList.add('ready');
-
+    screen.orientation.lock('portrait');
 
 }
 
@@ -35,9 +35,13 @@ var state = "";
 var pre_pause_state = "";
 
 
+var beep = new Audio('beep.mp3');
+var beepbeep = new Audio('beepbeep.mp3');
+
+
 document.body.onload = function load()
 {
-    
+    screen.orientation.lock('portrait');
     displayContainer = new container("displayContainer");   //time display container
     document.getElementById("box").appendChild(displayContainer.el);
 
@@ -110,6 +114,9 @@ document.body.onload = function load()
 
     stopBtn = new fbutton("stop_btn");    //start button
     document.getElementById("buttonContainer").appendChild(stopBtn.el);
+
+    resetBtn = new fbutton("reset_btn");    //start button
+    document.getElementById("buttonContainer").appendChild(resetBtn.el);
 
     if(localStorage.getItem("saved_seconds_work") != null || NaN || undefined )
     {
@@ -284,6 +291,8 @@ class fbutton
         
             
             $(this.el).click(function(){
+            document.getElementById("box").style.backgroundColor = "#00cf26";
+               document.getElementById("reset_btn").style.visibility = "visible";
                 SetContainer.el.innerHTML = "SETS LEFT: " + sets;  
                 inputContainer.el.style.visibility = "hidden";
                 document.getElementById("start_btn").style.visibility = "hidden";
@@ -303,9 +312,9 @@ class fbutton
             
         }  
 
-        if(arg_id == "stop_btn"){  //START BUTTON
+        if(arg_id == "stop_btn"){ 
 
-            this.el.innerHTML = "STOP";
+            this.el.innerHTML = "PAUSE";
         
             $(this.el).click(function(){
 
@@ -322,7 +331,7 @@ class fbutton
                else
                {
                     state = pre_pause_state;
-                    stopBtn.el.innerHTML = "STOP";
+                    stopBtn.el.innerHTML = "PAUSE";
                     if( state == "WORK" ){
                        countDownWork_int = setInterval(countDownWork, 1000);
                     }
@@ -335,6 +344,27 @@ class fbutton
                 
             }); //click
         } //if stop  
+
+        if( arg_id == "reset_btn" )
+        {
+            this.el.innerHTML = "RESET";
+            
+            $(this.el).click(function(){
+               document.getElementById("reset_btn").style.visibility = "hidden";
+                document.getElementById("box").style.backgroundColor = "#005cfc";
+                inputContainer.el.style.visibility = "visible";
+                document.getElementById("start_btn").style.visibility = "visible";
+                document.getElementById("stop_btn").style.visibility = "hidden";
+                
+                seconds = input_seconds_work;
+                minutes = input_minutes_work;
+                
+                digitsContainer.el.innerHTML = minutes + ":" + seconds;
+                
+                clearInterval(countDownWork_int);
+                SetContainer.el.innerHTML = "SETS LEFT: " + sets;  
+            });
+        }
     }   
 }
 
@@ -358,6 +388,7 @@ function countDownWork()
             seconds = input_seconds_rest;
 
             if( sets == 0 ){
+                document.getElementById("reset_btn").style.visibility = "hidden";
                 inputContainer.el.style.visibility = "visible";
                 document.getElementById("stop_btn").style.visibility = "hidden";
                 document.getElementById("start_btn").style.visibility = "visible";     
@@ -366,10 +397,18 @@ function countDownWork()
                 state = "FINISHED";
                 MessageContainer.el.innerHTML = state;
                 document.getElementById("box").style.backgroundColor = "#005cfc";
+                
+                beepbeep.play();
+
+               
                 return;
             }
            
             if( sets != 0 )
+                 beep.play();
+                document.getElementById("box").style.backgroundColor = " #fc2a00 ";
+                state = "REST";
+                MessageContainer.el.innerHTML = state;
                countDownWork_int = setInterval(countDownRest, 1000);
             return;
         }
@@ -398,12 +437,15 @@ function countDownRest()
 
        if( seconds_total_rest == 0)  //kraj serije
         {
+            beep.play();
             clearInterval(countDownWork_int);
 
             seconds_total_rest = parseInt(input_seconds_rest) + parseInt(input_minutes_rest * 60);
             minutes = Math.floor(seconds_total_work / 60);
             seconds = input_seconds_work;
-                      
+            document.getElementById("box").style.backgroundColor = "#00cf26";
+            state = "WORK";
+                MessageContainer.el.innerHTML = state;
             countDownWork_int = setInterval(countDownWork, 1000);
 
         }
@@ -423,4 +465,6 @@ function countDownRest()
     
         digitsContainer.el.innerHTML = minutes + ":" + seconds;   
     }
+
+
 

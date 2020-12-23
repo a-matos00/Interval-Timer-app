@@ -47,7 +47,7 @@ button
 {
     top:40vh;
     width:100%;
-    height:20%;
+    height:10vh;
 }
 
 .fbutton
@@ -119,6 +119,7 @@ button
     width:100%;
     height:30%;
 
+
 }
 
 #RestInputContainer
@@ -141,16 +142,17 @@ button
     bottom:0%;
     width:100%;
     height:10vh;
-    font-size:8vh;
+    font-size:7vh;
     text-align:center;
-   
+    opacity:0.7;
+
 }
 
 #SetContainer
 {
     position:absolute;
     top:2vh;
-    font-size: 6vh;
+    font-size: 5vh;
     width:100%;
     height:8vh;
     text-align:center;
@@ -162,6 +164,20 @@ button
     padding:none;
     padding-left:50px;
     box-sizing: border-box;
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important; 
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; 
+    outline: none !important;
+} 
+
+
+#reset_btn
+{
+    visibility:hidden;
+    width:100%;
+    border:none;
 }
 
 
