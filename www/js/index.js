@@ -19,7 +19,7 @@ var interval_variable;  //variable used for intervals
 var seconds_total_work = 0; //countdown variables
 var seconds_total_rest = 0;
 
-var minutes = 0;
+var minutes = 0;    //counter variables
 var seconds = 0;
 
 //user input variables
@@ -36,6 +36,9 @@ var pre_pause_state = "";
 
 var beep = new Audio('beep.mp3');   //audio files
 var beepbeep = new Audio('beepbeep.mp3');
+
+var work_color = "#00cf26"; //green
+var main_color = "#0069a5"; //blue
 
 
 //function loads all DOM elements, restores local storage data and defines input functions
@@ -120,27 +123,27 @@ document.body.onload = function load()
     document.getElementById("buttonContainer").appendChild(resetBtn.el);
 
     //local storage acess(contains input values and number of sets from last input change)
-    if(localStorage.getItem("saved_seconds_work") != null || NaN || undefined )
+    if(localStorage.getItem("saved_seconds_work") != undefined )
     {
         input_seconds_work = localStorage.getItem("saved_seconds_work")
     }
     
-    if(localStorage.getItem("saved_minutes_work") != null || NaN || undefined )
+    if(localStorage.getItem("saved_minutes_work") != undefined )
     {
         input_minutes_work = localStorage.getItem("saved_minutes_work")
     }
 
-    if(localStorage.getItem("saved_seconds_rest") != null || NaN || undefined )
+    if(localStorage.getItem("saved_seconds_rest") != undefined )
     {
         input_seconds_rest = localStorage.getItem("saved_seconds_rest")
     }
 
-    if(localStorage.getItem("saved_minutes_rest") != null || NaN || undefined )
+    if(localStorage.getItem("saved_minutes_rest") != undefined )
     {
         input_minutes_rest = localStorage.getItem("saved_minutes_rest")
     }
 
-    if(localStorage.getItem("saved_sets") != null || NaN || undefined )
+    if(localStorage.getItem("saved_sets") != undefined )
     {
         sets = localStorage.getItem("saved_sets")
     }
@@ -160,27 +163,22 @@ document.body.onload = function load()
              
              if( $(this).val() < 60 &&  $(this).val() > -1 &&  ($(this).val()).length < 3){
                 input_seconds_work = $(this).val(); //save user input
-              //  seconds = input_seconds_work;
-                digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;  //HTML change
-                
+                digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;  //HTML update
              }
         
-            else{   //invalid input
-                $(this).val("");
+            else{   //invalid input case
+                $(this).val("");    //empty the input field
                 input_seconds_work = 0;
-                seconds = 0;
-                digitsContainer.el.innerHTML = minutes + ":" + input_seconds_work;
+                digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;  //HTML update
             }
 
-            localStorage.setItem("saved_seconds_work", input_seconds_work );
+            localStorage.setItem("saved_seconds_work", input_seconds_work );    //save input to local storage
      });    
 
     $('#RestSecondsInput').on('input', function() { 
              
              if( $(this).val() < 60 &&  $(this).val() > -1 &&  ($(this).val()).length < 3){ //les than 3 digits
                 input_seconds_rest = $(this).val();
-              //  digitsContainer.el.innerHTML = minutes + ":" + input_seconds_rest;
-                seconds = input_seconds_rest;
              }
         
             else{   //invalid input
@@ -204,7 +202,6 @@ document.body.onload = function load()
             else{       //invalid input
                 $(this).val("");
                 input_minutes_work = 0;
-                minutes = 0;
                 digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;
             }
 
@@ -215,14 +212,12 @@ document.body.onload = function load()
              
              if( $(this).val() < 60 &&  $(this).val() > -1 &&  ($(this).val()).length < 3){ //les than 3 digits
                 input_minutes_rest = $(this).val();
-               // digitsContainer.el.innerHTML = input_minutes_rest + ":" + input_seconds_rest;
                 minutes = input_minutes_rest;
              }
         
             else{       //invalid input
                 $(this).val("");
                 input_minutes_rest = 0;
-                minutes = 0;
                 digitsContainer.el.innerHTML = input_minutes_rest + ":" + input_seconds_rest;
             }
 
@@ -246,16 +241,17 @@ document.body.onload = function load()
 
 }
 
+//this class defines input objects
 class input_field
 {   
-    constructor(arg_id)
+    constructor(arg_id) //the argument is the id which will be assigned to the object
     {
-        this.el = document.createElement("INPUT");
-        this.el.classList.add("input_field");
-        this.el.id = arg_id;   
-        this.el.type = "number";
+        this.el = document.createElement("INPUT");  //DOM element creation
+        this.el.classList.add("input_field");   //assigns css class
+        this.el.id = arg_id;   //asign object id
+        this.el.type = "number";    //asign input type
 
-        if(arg_id == "WorkMinutesInput")
+        if(arg_id == "WorkMinutesInput")    //define input parameters according to id
         {
             this.el.min = 0;
             this.el.max = 99;
@@ -266,7 +262,7 @@ class input_field
             this.el.min = 1;
             this.el.max = 59;
         }
-    }  //constructor end
+    }  
 }
 
 
@@ -281,63 +277,70 @@ class container
     
 }
 
-class fbutton
+class fbutton   //functional button class, the function called on click is defined by the id of the button
 {   
     constructor(arg_id)
     {
-        this.el = document.createElement("BUTTON");
-       
+        this.el = document.createElement("BUTTON"); //next 3 lines create a DOM element with an assigned id and class
         this.el.classList.add("fbutton");
         this.el.id = arg_id;     
-        digitsContainer.el.innerHTML = minutes + ":" + seconds;
 
         if(arg_id == "start_btn"){  //START BUTTON
+             this.el.innerHTML = "START";   //the button says START
+  
+            $(this.el).click(function(){    //( WORKOUT START )Function is called when the start button is pressed 
 
-             this.el.innerHTML = "START";
-        
-            
-            $(this.el).click(function(){
-            document.getElementById("box").style.backgroundColor = "#00cf26";
-               document.getElementById("reset_btn").style.visibility = "visible";
-                SetContainer.el.innerHTML = "SETS LEFT: " + sets;  
-                inputContainer.el.style.visibility = "hidden";
-                document.getElementById("start_btn").style.visibility = "hidden";
-                document.getElementById("stop_btn").style.visibility = "visible";
-                seconds_total_work = parseInt(input_seconds_work) + parseInt(input_minutes_work * 60);
-
+                //CSS
+                document.getElementById("box").style.backgroundColor = work_color;   //changes background color 
+                document.getElementById("reset_btn").style.visibility = "visible";  //the reset button is now visible
+                document.getElementById("start_btn").style.visibility = "hidden";   //hides start button
+                document.getElementById("stop_btn").style.visibility = "visible";   //pause button is now visible
+                inputContainer.el.style.visibility = "hidden";  //hides all inputs
+                document.getElementById("SetContainer").style.visibility = "visible";
+                            
+                //LOGIC
+                seconds_total_work = parseInt(input_seconds_work) + parseInt(input_minutes_work * 60);  //rest and work time calculation based on user input
                 seconds_total_rest = parseInt(input_seconds_rest) + parseInt(input_minutes_rest * 60);
-                
-                seconds = input_seconds_work;
+                seconds = input_seconds_work;   //setting counter variables
                 minutes = input_minutes_work;
-                
-                digitsContainer.el.innerHTML = minutes + ":" + seconds;
-                
-                interval_variable = setInterval(countDownWork, 1000);
+                state = "WORK"; //state change
 
-            });
-            
+                //HTML
+                digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;   //timer reset 
+                 SetContainer.el.innerHTML = "SETS LEFT: " + sets;   //displays set count
+                MessageContainer.el.innerHTML = state;  //display current state
+                
+                //START COUNTDOWN
+                interval_variable = setInterval(countDownWork, 1000);   //create interval for countdown
+            });     
         }  
 
-        if(arg_id == "stop_btn"){ 
+        if(arg_id == "stop_btn"){   //PAUSE BUTTON
 
-            this.el.innerHTML = "PAUSE";
+            this.el.innerHTML = "PAUSE";    //button label
         
             $(this.el).click(function(){
 
-               if( state == "WORK" || state == "REST" )
+               if( state == "WORK" || state == "REST" ) //if the timer is running
                { 
-                    stopBtn.el.innerHTML = "continue";
-                    clearInterval(interval_variable);
-                    pre_pause_state = state;
-                    state = "PAUSE";
-                    MessageContainer.el.innerHTML = state;
-                
+                   //FUNCTIONAL
+                    clearInterval(interval_variable);   //stops the timer
+
+                    //LOGIC
+                    pre_pause_state = state;    //saves the previous state for future reference
+                    state = "PAUSE";    //state change
+
+                    //HTML
+                    MessageContainer.el.innerHTML = state;  //updates current state display
+                    stopBtn.el.innerHTML = "continue";  //changes button label
                }
 
-               else
+               else //if the timer is paused
                {
-                    state = pre_pause_state;
-                    stopBtn.el.innerHTML = "PAUSE";
+                    state = pre_pause_state;    //return to previous state
+
+                    stopBtn.el.innerHTML = "PAUSE"; //change button label
+    
                     if( state == "WORK" ){
                        interval_variable = setInterval(countDownWork, 1000);
                     }
@@ -348,28 +351,34 @@ class fbutton
                }
 
                 
-            }); //click
-        } //if stop  
+            });
+        }  
 
-        if( arg_id == "reset_btn" )
+        if( arg_id == "reset_btn" ) //RESET BUTTON
         {
-            this.el.innerHTML = "RESET";
+            this.el.innerHTML = "RESET";    //change button label
             
             $(this.el).click(function(){
                 MessageContainer.el.innerHTML = "";
-               document.getElementById("reset_btn").style.visibility = "hidden";
-                document.getElementById("box").style.backgroundColor = "#005cfc";
+
+                //CSS
+                document.getElementById("box").style.backgroundColor = main_color;
+                document.getElementById("reset_btn").style.visibility = "hidden";                
                 inputContainer.el.style.visibility = "visible";
                 document.getElementById("start_btn").style.visibility = "visible";
                 document.getElementById("stop_btn").style.visibility = "hidden";
+                document.getElementById("SetContainer").style.visibility = "hidden";
                 
+                //LOGIC
                 seconds = input_seconds_work;
                 minutes = input_minutes_work;
                 
+                //HTML
                 digitsContainer.el.innerHTML = minutes + ":" + seconds;
+                SetContainer.el.innerHTML = "SETS LEFT: " + sets;
                 
-                clearInterval(interval_variable);
-                SetContainer.el.innerHTML = "SETS LEFT: " + sets;  
+                //FUNCTIONAL
+                clearInterval(interval_variable);             
             });
         }
     }   
@@ -378,36 +387,33 @@ class fbutton
 
 function countDownWork()
     {
-        state = "WORK";
-        MessageContainer.el.innerHTML = state;
-        document.getElementById("box").style.backgroundColor = "#00cf26";
-        
-    
-       if( seconds_total_work == 0)  //kraj serije
+       if( seconds_total_work == 0)  //end of work interval
         {
-            clearInterval(interval_variable);
-            sets--;
-            SetContainer.el.innerHTML = "SETS LEFT: " + sets;
+            clearInterval(interval_variable);   //stop counting the work time
+            sets--; //one less set to go
+            SetContainer.el.innerHTML = "SETS LEFT: " + sets;   //set display update
 
+            seconds_total_work = parseInt(input_seconds_work) + parseInt(input_minutes_work * 60);  //work time reset for future reference
 
-            seconds_total_work = parseInt(input_seconds_work) + parseInt(input_minutes_work * 60);
             minutes = Math.floor(seconds_total_rest / 60);
-            seconds = input_seconds_rest;
+            seconds = input_seconds_rest;   //prepare counter variables for rest time
 
-            if( sets == 0 ){
+            if( sets == 0 ){    //WORKOUT FINISH
+                //CSS
+                document.getElementById("box").style.backgroundColor = main_color;
                 document.getElementById("reset_btn").style.visibility = "hidden";
                 inputContainer.el.style.visibility = "visible";
                 document.getElementById("stop_btn").style.visibility = "hidden";
-                document.getElementById("start_btn").style.visibility = "visible";     
+                document.getElementById("start_btn").style.visibility = "visible"; 
+                document.getElementById("SetContainer").style.visibility = "hidden";
+            
                 SetContainer.el.innerHTML = "SETS LEFT: " + sets;  
-                sets = localStorage.getItem("saved_sets")
+                sets = localStorage.getItem("saved_sets");
                 state = "FINISHED";
                 MessageContainer.el.innerHTML = state;
-                document.getElementById("box").style.backgroundColor = "#005cfc";
-                
+                   
                 beepbeep.play();
 
-               
                 return;
             }
            
@@ -416,6 +422,7 @@ function countDownWork()
                 document.getElementById("box").style.backgroundColor = " #fc2a00 ";
                 state = "REST";
                 MessageContainer.el.innerHTML = state;
+                 digitsContainer.el.innerHTML = input_minutes_rest + ":" + input_seconds_rest;  //HTML update
                interval_variable = setInterval(countDownRest, 1000);
             return;
         }
@@ -453,6 +460,7 @@ function countDownRest()
             document.getElementById("box").style.backgroundColor = "#00cf26";
             state = "WORK";
                 MessageContainer.el.innerHTML = state;
+             digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;  //HTML update
             interval_variable = setInterval(countDownWork, 1000);
 
         }

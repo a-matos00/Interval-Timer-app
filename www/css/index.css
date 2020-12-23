@@ -59,8 +59,7 @@ button
 }
 
 .input_field
-{
-    
+{ 
     width: 6vh;
     height:4vh;
 }
@@ -73,7 +72,7 @@ button
 #box{
     width:100%;
     height:100%;
-    background-color:#005cfc;
+    background-color:#0069a5 ;
     color:white;
     font-family:abc;
     
@@ -150,6 +149,7 @@ button
 
 #SetContainer
 {
+    visibility:hidden;
     position:absolute;
     top:2vh;
     font-size: 5vh;
