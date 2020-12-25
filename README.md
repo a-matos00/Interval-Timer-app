@@ -8,4 +8,10 @@
   
 <h2>Instalation</h2>
   <h3>Android instalation</h3>
-    <span>Run `app-debug.apk` on your Android device. To find the .apk go to  .../platforms/android/app/build/outputs/apk/debug .
+    <span>Run `app-debug.apk` on your Android device. To find the .apk go to  .../platforms/android/app/build/outputs/apk/debug .</span>
+    
+    ```
+function test() {
+  console.log("notice the blank line before this function?");
+}
+```
