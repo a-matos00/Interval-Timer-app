@@ -30,6 +30,7 @@ var input_seconds_rest = 0;
 var input_minutes_rest = 0;
 
 var sets = 1;   //number of repetitions
+var input_sets = 1;
 
 var state = "";         //logical variables
 var pre_pause_state = "";
@@ -145,7 +146,7 @@ document.body.onload = function load()
 
     if(localStorage.getItem("saved_sets") != undefined )
     {
-        sets = localStorage.getItem("saved_sets")
+        input_sets = localStorage.getItem("saved_sets")
     }
     
     //applies local storage access result to GUI
@@ -153,8 +154,8 @@ document.body.onload = function load()
     document.getElementById("WorkMinutesInput").value = input_minutes_work;
     document.getElementById("RestSecondsInput").value = input_seconds_rest;
     document.getElementById("RestMinutesInput").value = input_minutes_rest;
-    document.getElementById("SetInput").value = sets;
-    SetContainer.el.innerHTML = "SETS LEFT: " + sets;
+    document.getElementById("SetInput").value = input_sets;
+    SetContainer.el.innerHTML = "SETS LEFT: " + input_sets;
     digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;
     
 
@@ -227,16 +228,16 @@ document.body.onload = function load()
      $('#SetInput').on('input', function() { 
              
              if( $(this).val() < 100 &&  $(this).val() > 0 &&  ($(this).val()).length < 3){ //les than 3 digits
-                sets = $(this).val();
-               SetContainer.el.innerHTML = "SETS LEFT: " + sets;
+                input_sets = $(this).val();
+               SetContainer.el.innerHTML = "SETS LEFT: " + input_sets;
              }
         
             else{       //invalid input
                 $(this).val("");
-                sets = 1;
+                input_sets = 1;
             }
 
-            localStorage.setItem("saved_sets", sets );
+            localStorage.setItem("saved_sets", input_sets );
      }); 
 
 }
@@ -303,11 +304,12 @@ class fbutton   //functional button class, the function called on click is defin
                 seconds_total_rest = parseInt(input_seconds_rest) + parseInt(input_minutes_rest * 60);
                 seconds = input_seconds_work;   //setting counter variables
                 minutes = input_minutes_work;
+                sets = input_sets;
                 state = "WORK"; //state change
 
                 //HTML
                 digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;   //timer reset 
-                 SetContainer.el.innerHTML = "SETS LEFT: " + sets;   //displays set count
+                 SetContainer.el.innerHTML = "SETS LEFT: " + input_sets;   //displays set count
                 MessageContainer.el.innerHTML = state;  //display current state
                 
                 //START COUNTDOWN
@@ -408,7 +410,7 @@ function countDownWork()
                 document.getElementById("SetContainer").style.visibility = "hidden";
             
                 SetContainer.el.innerHTML = "SETS LEFT: " + sets;  
-                sets = localStorage.getItem("saved_sets");
+                sets = input_sets;
                 state = "FINISHED";
                 MessageContainer.el.innerHTML = state;
                    
