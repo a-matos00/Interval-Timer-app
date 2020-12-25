@@ -187,7 +187,6 @@ document.body.onload = function load()
                 $(this).val("");
                 input_seconds_rest = 0;
                 seconds = 0;
-                digitsContainer.el.innerHTML = minutes + ":" + input_seconds_rest;
             }
     
             localStorage.setItem("saved_seconds_rest", input_seconds_rest );
@@ -220,7 +219,6 @@ document.body.onload = function load()
             else{       //invalid input
                 $(this).val("");
                 input_minutes_rest = 0;
-                digitsContainer.el.innerHTML = input_minutes_rest + ":" + input_seconds_rest;
             }
 
         localStorage.setItem("saved_minutes_rest", input_minutes_rest );
