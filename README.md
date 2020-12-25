@@ -20,7 +20,8 @@
   
   <h2>GUI</h2>
   
-  <span>![alt text](https://user-images.githubusercontent.com/56841259/103142030-d807eb80-46fd-11eb-9fe8-524f7bed8453.png)</span>
-  <span>![alt text](https://user-images.githubusercontent.com/56841259/103142097-3f25a000-46fe-11eb-8526-9a37594d518c.png)</span>
-  <span>![alt text](https://user-images.githubusercontent.com/56841259/103142099-4351bd80-46fe-11eb-843d-ed824f907521.png)</span>
+![alt text](https://user-images.githubusercontent.com/56841259/103142030-d807eb80-46fd-11eb-9fe8-524f7bed8453.png)
+![alt text](https://user-images.githubusercontent.com/56841259/103142097-3f25a000-46fe-11eb-8526-9a37594d518c.png)
+![alt text](https://user-images.githubusercontent.com/56841259/103142099-4351bd80-46fe-11eb-843d-ed824f907521.png)
+  
   
