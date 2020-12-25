@@ -1,6 +1,9 @@
 
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+   /* -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;   */
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; 
+    outline: none !important;
 }
 
 body {
@@ -20,6 +23,22 @@ body {
     position:relative;
 }
 
+
+
+button
+{
+    color:white;
+    background-color:transparent;
+    border:solid;
+}
+
+#buttonContainer
+{
+    top:40vh;
+    width:100%;
+    height:10vh;
+}
+
 input
 {
     -webkit-appearance: none;
@@ -36,20 +55,6 @@ input
     color:white;
 }
 
-button
-{
-    color:white;
-    background-color:transparent;
-    border:solid;
-}
-
-#buttonContainer
-{
-    top:40vh;
-    width:100%;
-    height:10vh;
-}
-
 .fbutton
 {
     width:50%;
@@ -64,24 +69,6 @@ button
     height:4vh;
 }
 
-#stop_btn
-{
-   visibility:hidden;
-}
-
-#box{
-    width:100%;
-    height:100%;
-    background-color:#0069a5 ;
-    color:white;
-    font-family:abc;
-    
-}
-
-@font-face {
-  font-family: abc;
-  src: url(abc.ttf);
-}
 
 
 #digitsContainer
@@ -95,14 +82,25 @@ button
    
 }
 
-
-
 #displayContainer
 {
     position:relative;
     width: 100%;
     height: 40%;
     
+}
+
+@font-face {
+  font-family: abc;
+  src: url(abc.ttf);
+}
+
+.flexeri{
+    display:flex;
+    font-size:4vh;
+    padding:none;
+    padding-left:50px;
+    box-sizing: border-box;
 }
 
 #inputContainer
@@ -113,27 +111,16 @@ button
 
 }
 
-#WorkInputContainer
-{
+#main_container{
     width:100%;
-    height:30%;
-
-
+    height:100%;
+    background-color:#0069a5 ;
+    color:white;
+    font-family:abc;
+    
 }
 
-#RestInputContainer
-{
-    width:100%;
-    height:30%;
 
-}
-
-#SetInputContainer
-{
-    width:100%;
-    height:30%;
-
-}
 
 #MessageContainer
 {
@@ -144,6 +131,13 @@ button
     font-size:7vh;
     text-align:center;
     opacity:0.7;
+
+}
+
+#RestInputContainer
+{
+    width:100%;
+    height:30%;
 
 }
 
@@ -158,26 +152,24 @@ button
     text-align:center;
 }
 
-.flexeri{
-    display:flex;
-    font-size:4vh;
-    padding:none;
-    padding-left:50px;
-    box-sizing: border-box;
+#SetInputContainer
+{
+    width:100%;
+    height:30%;
+
 }
-
-* {
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important; 
-    -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; 
-    outline: none !important;
-} 
-
 
 #reset_btn
 {
     visibility:hidden;
     width:100%;
     border:none;
+}
+
+#WorkInputContainer
+{
+    width:100%;
+    height:30%;
 }
 
 

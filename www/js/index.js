@@ -48,7 +48,7 @@ document.body.onload = function load()
     screen.orientation.lock('portrait');    //orientation lock(cordova plugin)
 
     displayContainer = new container("displayContainer");   //data and messages display container
-    document.getElementById("box").appendChild(displayContainer.el);
+    document.getElementById("main_container").appendChild(displayContainer.el);
 
     SetContainer = new container("SetContainer");   //set count display
     document.getElementById("displayContainer").appendChild(SetContainer.el);
@@ -62,7 +62,7 @@ document.body.onload = function load()
     MessageContainer.el.innerHTML = state;
    
     inputContainer = new container("inputContainer");   //main input wrapper
-    document.getElementById("box").appendChild(inputContainer.el);
+    document.getElementById("main_container").appendChild(inputContainer.el);
 
     WorkInputContainer = new container("WorkInputContainer");   //work input wrapper
     document.getElementById("inputContainer").appendChild(WorkInputContainer.el);
@@ -112,13 +112,14 @@ document.body.onload = function load()
     document.getElementById("SetInputContainer").appendChild(SetInput.el);
 
     buttonContainer = new container("buttonContainer");   //button wrapper
-    document.getElementById("box").appendChild(buttonContainer.el);
+    document.getElementById("main_container").appendChild(buttonContainer.el);
         
     startBtn = new fbutton("start_btn");    //start button
     document.getElementById("buttonContainer").appendChild(startBtn.el);
 
     stopBtn = new fbutton("stop_btn");    //start button
     document.getElementById("buttonContainer").appendChild(stopBtn.el);
+    document.getElementById("stop_btn").style.visibility = "hidden";
 
     resetBtn = new fbutton("reset_btn");    //start button
     document.getElementById("buttonContainer").appendChild(resetBtn.el);
@@ -292,7 +293,7 @@ class fbutton   //functional button class, the function called on click is defin
             $(this.el).click(function(){    //( WORKOUT START )Function is called when the start button is pressed 
 
                 //CSS
-                document.getElementById("box").style.backgroundColor = work_color;   //changes background color 
+                document.getElementById("main_container").style.backgroundColor = work_color;   //changes background color 
                 document.getElementById("reset_btn").style.visibility = "visible";  //the reset button is now visible
                 document.getElementById("start_btn").style.visibility = "hidden";   //hides start button
                 document.getElementById("stop_btn").style.visibility = "visible";   //pause button is now visible
@@ -364,7 +365,7 @@ class fbutton   //functional button class, the function called on click is defin
                 MessageContainer.el.innerHTML = "";
 
                 //CSS
-                document.getElementById("box").style.backgroundColor = main_color;
+                document.getElementById("main_container").style.backgroundColor = main_color;
                 document.getElementById("reset_btn").style.visibility = "hidden";                
                 inputContainer.el.style.visibility = "visible";
                 document.getElementById("start_btn").style.visibility = "visible";
@@ -402,7 +403,7 @@ function countDownWork()
 
             if( sets == 0 ){    //WORKOUT FINISH
                 //CSS
-                document.getElementById("box").style.backgroundColor = main_color;
+                document.getElementById("main_container").style.backgroundColor = main_color;
                 document.getElementById("reset_btn").style.visibility = "hidden";
                 inputContainer.el.style.visibility = "visible";
                 document.getElementById("stop_btn").style.visibility = "hidden";
@@ -421,7 +422,7 @@ function countDownWork()
            
             if( sets != 0 )
                  beep.play();
-                document.getElementById("box").style.backgroundColor = " #fc2a00 ";
+                document.getElementById("main_container").style.backgroundColor = " #fc2a00 ";
                 state = "REST";
                 MessageContainer.el.innerHTML = state;
                  digitsContainer.el.innerHTML = input_minutes_rest + ":" + input_seconds_rest;  //HTML update
@@ -449,7 +450,7 @@ function countDownRest()
     {
         state = "REST";
         MessageContainer.el.innerHTML = state;
-        document.getElementById("box").style.backgroundColor = " #fc2a00 ";
+        document.getElementById("main_container").style.backgroundColor = " #fc2a00 ";
 
        if( seconds_total_rest == 0)  //kraj serije
         {
@@ -459,10 +460,10 @@ function countDownRest()
             seconds_total_rest = parseInt(input_seconds_rest) + parseInt(input_minutes_rest * 60);
             minutes = Math.floor(seconds_total_work / 60);
             seconds = input_seconds_work;
-            document.getElementById("box").style.backgroundColor = "#00cf26";
+            document.getElementById("main_container").style.backgroundColor = "#00cf26";
             state = "WORK";
-                MessageContainer.el.innerHTML = state;
-             digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;  //HTML update
+            MessageContainer.el.innerHTML = state;
+            digitsContainer.el.innerHTML = input_minutes_work + ":" + input_seconds_work;  //HTML update
             interval_variable = setInterval(countDownWork, 1000);
 
         }
