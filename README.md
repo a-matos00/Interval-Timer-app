@@ -7,7 +7,7 @@
 <span>This repository contains the .apk file of the app which can be installed on Android devices. The content of the /www directory can be started inside a browser as a web application.</span>
   
 <h2>Instalation</h2>
-  <h3>Android/h3>
+  <h3>Android</h3>
   
    <span>Run `app-debug.apk` on your Android device.To find the .apk file go to  `.../platforms/android/app/build/outputs/apk/debug`.</span>
   
