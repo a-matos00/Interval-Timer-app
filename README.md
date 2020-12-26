@@ -24,5 +24,15 @@
   
    <span>The web source code is inside the `/www` directory. To run the app offline on a PC just open the `index.html` file inside an internet browser.</span>
   
+<h2>Code explanation</h2>
+
+<h4>DOM elements</h4>
+
+<span>All of the DOM elements are generated in the Javascript code except the `main_container` div who is a child of the body element and the parent of all other generated elements. There are 3 classes I made to quickly add new customized DOM elements : `fbutton`,`containers` and `input_field`. The argument of their constructor is their **id**.</span>
+
+<h4>fbutton class</h4>
+
+<span>The class is written in a way in which the argument of the constructor dictates which `onclick function is asssigned to the button. It also assigns the proper label of the button.</span>
+
 
 
