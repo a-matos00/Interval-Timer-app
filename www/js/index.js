@@ -251,13 +251,13 @@ class input_field
         this.el.id = arg_id;   //asign object id
         this.el.type = "number";    //asign input type
 
-        if(arg_id == "WorkMinutesInput")    //define input parameters according to id
+        if(arg_id == "WorkMinutesInput" || arg_id == "RestMinutesInput")    //define input parameters according to id
         {
             this.el.min = 0;
             this.el.max = 99;
         }
     
-        if(arg_id == "WorkSecondsInput")
+        if(arg_id == "WorkSecondsInput" || arg_id == "RestSecondsInput")
         {
             this.el.min = 1;
             this.el.max = 59;
