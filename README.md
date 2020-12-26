@@ -32,7 +32,10 @@
 
 <h4>fbutton class</h4>
 
-<span>The class is written in a way in which the argument of the constructor dictates which `onclick function is asssigned to the button. It also assigns the proper label of the button.</span>
+<span>The class is written in a way in which the argument of the constructor dictates which `onclick` function is asssigned to the button. It also assigns the proper label of the button.</span>
 
+<h4>input_field class</h4>
+
+<span></span>
 
 
