@@ -36,6 +36,4 @@
 
 <h4>input_field class</h4>
 
-<span></span>
-
 
